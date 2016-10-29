@@ -1,0 +1,269 @@
+<html>
+<head>
+<title>404: Fairytale Not Found - Level 2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<style>
+html,body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	text-align: center;
+	overflow-x: hidden;
+}
+.portrait canvas {
+	transform-origin: 0 0;
+	transform: rotate(-90deg) translateX(-100%);
+}
+.desktop canvas {
+ 	transform: scale(-1, 1);
+}
+</style>
+</head>
+<body>
+<h1>Level 2 - What if... end else</h1>
+<p>...you are in a situation in which you have to decide to do something or not, like "if there are no car, you can cross the street"</p>
+<p>When you are programming it is exactly the same.</p>
+<p>Let's try it. Tell the kid to walk and cross the street only if the car is not arriving (input is false)</p>
+<div id="here"></div>
+<p> Block you are going to use </p>
+<ul>
+	<li /> Input block: in this case it represent a car that is arriving (if it's value is true) or not (if it's value is false).
+	<li /> If block: execute a block of code only if the condition sussisted.
+	<li /> True block: is a <i>constant</i> block, with value true. 
+	<li /> Action block: means the action you want to execute.
+</ul>
+<p>Show <a href="https://github.com/artoolkit/artoolkit5/blob/master/doc/patterns/Matrix%20code%203x3%20(72dpi)/5.png">3x3 marker id 5</a>, <a href="https://github.com/artoolkit/artoolkit5/blob/master/doc/patterns/Matrix%20code%203x3%20(72dpi)/20.png">3x3 marker id 20</a>, <a href="https://github.com/artoolkit/artoolkit5/blob/master/doc/patterns/Hiro%20pattern.pdf">Hiro pattern</a> and <a href="https://github.com/artoolkit/artoolkit5/blob/master/doc/patterns/Kanji%20pattern.pdf">Kanji pattern</a> to camera to display a colorful objects on top of them. Tap the objects to spin them.
+
+<p>&larr; <a href="index.html">Back to examples</a></p>
+
+<script async src="../build/artoolkit.min.js"></script>
+<script async src="js/third_party/three.js/three.min.js"></script>
+<script async src="../js/artoolkit.three.js"></script>
+<script>
+
+window.ARThreeOnLoad = function() {
+
+	ARController.getUserMediaThreeScene({
+		maxARVideoSize: 640,
+		cameraParam: 'Data/camera_para-iPhone 5 rear 640x480 1.0m.dat',
+		onSuccess: function(arScene, arController, arCamera) {
+
+			document.body.className = arController.orientation;
+
+			arController.setPatternDetectionMode(artoolkit.AR_MATRIX_CODE_DETECTION);
+			arController.setMatrixCodeType(artoolkit.AR_MATRIX_CODE_3x3_PARITY65);
+
+			var renderer = new THREE.WebGLRenderer({antialias: true});
+			if (arController.orientation === 'portrait') {
+				var w = (window.innerWidth / arController.videoHeight) * arController.videoWidth;
+				var h = window.innerWidth;
+				renderer.setSize(w, h);
+				renderer.domElement.style.paddingBottom = (w-h) + 'px';
+			} else {
+				if (/Android|mobile|iPad|iPhone/i.test(navigator.userAgent)) {
+					renderer.setSize(window.innerWidth, (window.innerWidth / arController.videoWidth) * arController.videoHeight);
+				} else {
+					renderer.setSize(arController.videoWidth, arController.videoHeight);
+					document.body.className += ' desktop';
+				}
+			}
+
+			document.body.insertBefore(renderer.domElement, document.getElementById('here'));
+			
+			var materialArray = [];
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/orange.jpg')})); //E
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/orange.jpg')})); //W
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/orange.jpg')})); //N
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/orange.jpg')})); //S
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/face_three.jpg')})); //top
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/orange.jpg')})); //btm
+		    var material = new THREE.MeshFaceMaterial(materialArray);
+			
+			var number_three = new THREE.Mesh(
+				new THREE.BoxGeometry(1,1,0.1),
+				material
+			);
+			number_three.material.shading = THREE.FlatShading;
+			number_three.position.z = 0.1;
+			
+			var materialArray = [];
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/orange.jpg')})); //E
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/orange.jpg')})); //W
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/orange.jpg')})); //N
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/orange.jpg')})); //S
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/face_five.jpg')})); //top
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/orange.jpg')})); //btm
+		    var material = new THREE.MeshFaceMaterial(materialArray);
+			
+			var number_five = new THREE.Mesh(
+				new THREE.BoxGeometry(1,1,0.1),
+				material
+			);
+			number_five.material.shading = THREE.FlatShading;
+			number_five.position.z = 0.1;
+			
+			var materialArray = [];
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/pink.jpg')})); //E
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/pink.jpg')})); //W
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/pink.jpg')})); //N
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/pink.jpg')})); //S
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/face_for.jpg')})); //top
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/pink.jpg')})); //btm
+		    var material = new THREE.MeshFaceMaterial(materialArray);
+			
+			var for_block = new THREE.Mesh(
+				new THREE.BoxGeometry(1,1,0.1),
+				material
+			);
+			for_block.material.shading = THREE.FlatShading;
+			for_block.position.z = 0.1;
+			
+			var materialArray = [];
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/green.jpg')})); //E
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/green.jpg')})); //W
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/green.jpg')})); //N
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/green.jpg')})); //S
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/run_face_3.jpg')})); //top
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/green.jpg')})); //btm
+		    var material = new THREE.MeshFaceMaterial(materialArray);
+			
+			var action_three_block = new THREE.Mesh(
+				new THREE.BoxGeometry(1,1,0.1),
+				material
+			);
+			action_three_block.material.shading = THREE.FlatShading;
+			action_three_block.position.z = 0.1;
+			
+			var materialArray = [];
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/green.jpg')})); //E
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/green.jpg')})); //W
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/green.jpg')})); //N
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/green.jpg')})); //S
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/run_face_5.jpg')})); //top
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'textures/green.jpg')})); //btm
+		    var material = new THREE.MeshFaceMaterial(materialArray);
+			
+			var action_five_block = new THREE.Mesh(
+				new THREE.BoxGeometry(1,1,0.1),
+				material
+			);
+			action_five_block.material.shading = THREE.FlatShading;
+			action_five_block.position.z = 0.1;
+			
+			var number_three_markerRoot = arController.createThreeBarcodeMarker(28, 1);
+			number_three_markerRoot.add(number_three);
+			arScene.scene.add(number_three_markerRoot);
+			
+			var number_five_markerRoot = arController.createThreeBarcodeMarker(31, 1);
+			number_five_markerRoot.add(number_three);
+			arScene.scene.add(number_five_markerRoot);
+			
+			var action_three_block_markerRoot = arController.createThreeBarcodeMarker(2, 1);
+			action_three_block_markerRoot.add(action_three_block);
+			arScene.scene.add(action_three_block_markerRoot);
+			
+			var action_five_block_markerRoot = arController.createThreeBarcodeMarker(5, 1);
+			action_five_block_markerRoot.add(action_five_block);
+			arScene.scene.add(action_five_block_markerRoot);
+
+			var materialArray = [];
+		    materialArray.push(new THREE.MeshBasicMaterial( { transparent: true })); //E
+		    materialArray.push(new THREE.MeshBasicMaterial( { transparent: true })); //W
+		    materialArray.push(new THREE.MeshBasicMaterial( { transparent: true })); //N
+		    materialArray.push(new THREE.MeshBasicMaterial( { transparent: true })); //S
+		    materialArray.push(new THREE.MeshBasicMaterial( { transparent: true })); //top
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/bravo.png'), transparent: true  })); //btm
+		    var material = new THREE.MeshFaceMaterial(materialArray);
+			
+			var final_screen_good = new THREE.Mesh(
+				new THREE.BoxGeometry(0.5,0.5,0.1),
+				material
+			);
+			final_screen_good.material.shading = THREE.FlatShading;
+			final_screen_good.position.z = 1;
+			final_screen_good.rotation.z = Math.PI * 1.5;
+			
+			var materialArray = [];
+		    materialArray.push(new THREE.MeshBasicMaterial( { transparent: true })); //E
+		    materialArray.push(new THREE.MeshBasicMaterial( { transparent: true })); //W
+		    materialArray.push(new THREE.MeshBasicMaterial( { transparent: true })); //N
+		    materialArray.push(new THREE.MeshBasicMaterial( { transparent: true })); //S
+		    materialArray.push(new THREE.MeshBasicMaterial( { transparent: true })); //top
+		    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/retry.png'), transparent: true  })); //btm
+		    var material = new THREE.MeshFaceMaterial(materialArray);
+			
+			var final_screen_bad = new THREE.Mesh(
+				new THREE.BoxGeometry(0.5,0.5,0.1),
+				material
+			);
+			final_screen_bad.material.shading = THREE.FlatShading;
+			final_screen_bad.position.z = 1;
+			final_screen_bad.rotation.z = Math.PI * 1.5;
+			
+			//a = 100;
+			var do_tick = true;
+			
+			var tick = function() {
+			
+				arScene.process();
+				arScene.renderOn(renderer);
+				requestAnimationFrame(tick);
+				
+				arScene.scene.remove(final_screen_good);
+				arScene.scene.remove(final_screen_bad);
+			
+7*				if (if_block_markerRoot.visible == true) {
+					if(car_markerRoot.visible == true) {
+						if(action_block_markerRoot.visible == true) {
+							if(else_block_markerRoot.visible == true) {
+								if(no_action_block_markerRoot.visible == true) {
+									arScene.scene.add(final_screen_good);
+								}
+							} else if (no_action_block_markerRoot.visible == true) {
+								arScene.scene.add(final_screen_bad);
+							}
+						} else if ( else_block_markerRoot.visible == true | no_action_block_markerRoot.visible == true) {
+							arScene.scene.add(final_screen_bad);
+						}
+					} else if (action_block_markerRoot.visible == true | else_block_markerRoot.visible == true | no_action_block_markerRoot.visible == true) {
+						arScene.scene.add(final_screen_bad);
+						//do_tick = false;
+					}
+				} else if (car_markerRoot.visible == true | action_block_markerRoot.visible == true | else_block_markerRoot.visible == true | no_action_block_markerRoot.visible == true) {
+					arScene.scene.add(final_screen_bad);
+					//do_tick = false;
+				}
+				/*a += 1;
+				action_block.position.z += 0.001 * a;
+				//action_block.position.z %= 0.5;
+				false_block.position.z += 0.001 * a;
+				//false_block.position.z %= 0.5;
+				if_block.position.z += 0.001 * a;
+				//false_block.position.z %= 0.5;
+				car.position.z += 0.001 * a;*/
+				//car.position.z %= 0.5;
+				
+				/*if ( a == 0 ) {
+					arScene.scene.add(final_screen);
+				}*/
+				//a -= 1;
+				//console.log(a);
+				//console.log(markerRoot.visible, markerRoot.visible);
+			};
+
+			if (do_tick) tick();
+
+		}
+	});
+
+	delete window.ARThreeOnLoad;
+
+};
+
+if (window.ARController && ARController.getUserMediaThreeScene) {
+	ARThreeOnLoad();
+}
+</script>
+
+</body>
+</html>
